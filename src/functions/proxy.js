@@ -2,7 +2,7 @@
 
 exports.handler = function(event, context, callback) {
   const { path } = event.queryStringParameters
-  console.log('request for', path)
+  console.log('request for', event)
 
   return callback(null, { statusCode: 200, isBase64Encoded: false, body: path })
 
