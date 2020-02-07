@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "netlify-lambda build functions"
+  },
+  "dependencies": {
+    "netlify-lambda": "^1.6.3"
+  }
+}
