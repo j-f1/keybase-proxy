@@ -1,9 +1,10 @@
-const { request } = require('https')
+const http = require('http')
 
 exports.handler = function(event, context, callback) {
   const path = event.queryStringParameters.path || event.path
-  
-  request(`https://j_f.keybase.pub${path}`, { method: event.httpMethod }, res => {
+  console.log('got req', path)
+
+  http.request(`https://j_f.keybase.pub${path}`, { method: event.httpMethod }, res => {
     console.log('got res')
     return callback(null, { statusCode: 200, isBase64Encoded: false, body: path })
     const chunks = []
