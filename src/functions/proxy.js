@@ -1,10 +1,10 @@
-const http = require('http')
+const https = require('https')
 
 exports.handler = function(event, context, callback) {
   const path = event.queryStringParameters.path || event.path
   console.log('got req', path)
 
-  http.request(`https://j_f.keybase.pub${path}`, { method: event.httpMethod }, res => {
+  https.request(`https://j_f.keybase.pub${path}`, { method: event.httpMethod }, res => {
     console.log('got res')
     return callback(null, { statusCode: 200, isBase64Encoded: false, body: path })
     const chunks = []
@@ -13,7 +13,7 @@ exports.handler = function(event, context, callback) {
       chunks.push(chunk)
       len += chunk.length
     })
-    res.on('error', callback)
+    res.on('error', err => callback(err, null))
     res.on('end', () => {
       const data = Buffer.concat(chunks, len)
       console.log('got data')
@@ -28,5 +28,5 @@ exports.handler = function(event, context, callback) {
         body: data.toString('base64')
       })
     })
-  }).on('error', callback)
+  }).on('error', err => callback(err, null))
 }
