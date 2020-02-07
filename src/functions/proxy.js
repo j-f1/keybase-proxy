@@ -12,6 +12,7 @@ exports.handler = async function(event, context) {
     )
     .on('error', reject)
   })
+  console.log('got res')
 
   const data = await new Promise((resolve, reject) => {
     const chunks = []
@@ -25,6 +26,7 @@ exports.handler = async function(event, context) {
       resolve(Buffer.concat(chunks, len))
     })
   })
+  console.log('got data')
 
   return {
     statusCode: res.statusCode,
