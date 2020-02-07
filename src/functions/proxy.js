@@ -1,11 +1,17 @@
 const qs = require('querystring')
-const { promisify } = require('util')
-const request = promisify(require('https').get)
+const { request } = require('https')
 
 exports.handler = async function(event, context) {
   try {
   const { path } = event.queryStringParameters
-  const res = await request(`https://j_f.keybase.pub/${path}`, { method: event.httpMethod })
+  const res = await new Promise((resolve, reject) => {
+    request(
+      `https://j_f.keybase.pub/${path}`,
+      { method: event.httpMethod },
+      resolve
+    )
+    .on('error', reject)
+  })
 
   const data = await new Promise((resolve, reject) => {
     const chunks = []
