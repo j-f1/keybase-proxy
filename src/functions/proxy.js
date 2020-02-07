@@ -3,6 +3,7 @@ const { promisify } = require('util')
 const request = promisify(require('https').get)
 
 exports.handler = async function(event, context) {
+  try {
   const { path } = event.queryStringParameters
   const res = await request(`https://j_f.keybase.pub/${path}`, { method: event.httpMethod })
 
@@ -28,5 +29,8 @@ exports.handler = async function(event, context) {
     },
     isBase64Encoded: true,
     body: data.toString('base64')
+  }
+  } catch (e) {
+    return { statusCode: 500, body: e.stack }
   }
 }
