@@ -1,36 +1,23 @@
-const https = require('https')
+const fetch = require('node-fetch').default
 
-exports.handler = function(event, context, callback) {
+exports.handler = async function(event, context) {
   const path = event.queryStringParameters.path || event.path
   console.log('got req', path)
-  context.callbackWaitsForEmptyEventLoop = false
 
-  process.nextTick(() =>
-  https.request({ hostname: 'example.com', path, method: event.httpMethod, headers: event.headers }, res => {
-    console.log('got res')
-    const chunks = []
-    let len = 0
-    res.on('data', (chunk) => {
-      chunks.push(chunk)
-      len += chunk.length
-    })
-    res.on('error', err => callback(err, null))
-    res.on('end', () => {
-      const data = Buffer.concat(chunks, len)
-      console.log('got data')
-      callback(null, {
-        statusCode: res.statusCode,
-        headers: {
-          ...res.headers,
-          'Access-Control-Allow-Origin': event.headers.Origin,
-          'Vary': (res.headers.vary || '').split(/,\s*/).concat('Origin').join(', '),
-        },
-        isBase64Encoded: true,
-        body: data.toString('base64')
-      })
-    })
-  }).on('error', err => callback(err, null))
-    .on('response', () => console.log('got res'))
-    .on('socket', () => console.log('got socket'))
- )
+  const res = await fetch(`https://j_f.keybase.pub/${path}`, {
+    method: event.httpMethod,
+    headers: { ...event.headers, host: 'j_f.keybase.pub' },
+  })
+  console.log('got res')
+  const data = await res.buffer()
+  console.log('got data')
+  return {
+    statusCode: res.status,
+    headers: {
+      ...res.headers,
+      'Access-Control-Allow-Origin': '*',
+    },
+    isBase64Encoded: true,
+    body: data.toString('base64'),
+  }
 }
