@@ -5,7 +5,7 @@ exports.handler = function(event, context, callback) {
   console.log('got req', path)
   context.callbackWaitsForEmptyEventLoop = false
 
-  return callback(null, { statusCode: 200, isBase64Encoded: false, body: JSON.stringify(event) })
+  return callback(null, { statusCode: 200, isBase64Encoded: false, body: JSON.stringify({ hostname: 'j_f.keybase.pub', path, method: event.httpMethod, headers: event.headers },) })
 
   https.request({ hostname: 'j_f.keybase.pub', path, method: event.httpMethod, headers: event.headers }, res => {
     console.log('got res')
