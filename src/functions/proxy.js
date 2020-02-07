@@ -4,7 +4,7 @@ exports.handler = function(event, context, callback) {
   const { path } = event.queryStringParameters
   console.log('request for', path)
 
-  return callback({ statusCode: 200, isBase64Encoded: false, body: path })
+  return callback(null, { statusCode: 200, isBase64Encoded: false, body: path })
 
   request(`https://j_f.keybase.pub/${path}`, { method: event.httpMethod }, res => {
     console.log('got res')
