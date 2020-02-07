@@ -3,5 +3,5 @@
   functions = "src/functions/"
 
 [[redirects]]
-  from = "/*
+  from = "/*"
   to = "/.netlify/functions/proxy?path=:splat"
