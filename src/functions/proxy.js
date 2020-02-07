@@ -3,6 +3,7 @@ const https = require('https')
 exports.handler = function(event, context, callback) {
   const path = event.queryStringParameters.path || event.path
   console.log('got req', path)
+  context.callbackWaitsForEmptyEventLoop = false
 
   https.request(`https://j_f.keybase.pub${path}`, { method: event.httpMethod }, res => {
     console.log('got res')
