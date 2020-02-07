@@ -1,4 +1,4 @@
-//const { request } = require('https')
+const { request } = require('https')
 
 exports.handler = function(event, context, callback) {
   const path = event.queryStringParameters.path || event.path
