@@ -6,7 +6,7 @@ exports.handler = function(event, context, callback) {
   context.callbackWaitsForEmptyEventLoop = false
 
   process.nextTick(() =>
-  https.request({ hostname: 'j_f.keybase.pub', path, method: event.httpMethod, headers: event.headers }, res => {
+  https.request({ hostname: 'example.com', path, method: event.httpMethod, headers: event.headers }, res => {
     console.log('got res')
     const chunks = []
     let len = 0
