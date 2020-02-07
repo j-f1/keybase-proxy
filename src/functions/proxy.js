@@ -31,6 +31,6 @@ exports.handler = async function(event, context) {
     body: data.toString('base64')
   }
   } catch (e) {
-    return { statusCode: 500, body: e.stack }
+    return { statusCode: 500, body: JSON.stringify(e), isBase64Encoded: false }
   }
 }
