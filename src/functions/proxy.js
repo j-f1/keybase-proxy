@@ -4,6 +4,7 @@ const { request } = require('https')
 exports.handler = async function(event, context) {
   try {
   const { path } = event.queryStringParameters
+  console.log('request for', path)
   const res = await new Promise((resolve, reject) => {
     request(
       `https://j_f.keybase.pub/${path}`,
