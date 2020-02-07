@@ -1,7 +1,7 @@
 const qs = require('querystring')
 const { request } = require('https')
 
-exports.handler = async function(event, context, callback) {
+exports.handler = function(event, context, callback) {
   const { path } = event.queryStringParameters
   console.log('request for', path)
 
